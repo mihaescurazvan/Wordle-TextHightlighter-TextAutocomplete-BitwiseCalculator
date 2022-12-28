@@ -28,3 +28,17 @@ Am implementat cele 4 operatii prin functii distincte in urmatorul mod:
   * pentru **xor** am folosit echivalenta portii logice XOR cu A*!B + !A*B .
   
 ## **Wordle** | Timp de lucru: 18-20h
+
+Pentru implementarea jocului **wordle** am folosit biblioteca din C **ncurses**, ca sa creez interfata grafica. 
+Initial am creat un meniu simplist, care are doua optiuni **Play New Game** si **Quit**. Daca jucatorul alege prima optiune se va crea o tabla de joc care contine cate 5 ferestre asezate pe 6 randuri ce reprezinta cele 6 incercari ale jucatorului pentru a ghici cuvantul. Daca jucatorul alege a doua optiune, programul se va opri.
+Cand se incepe un joc nou, din lista cuvintelor date in problema, se extrage la intamplare unul care va trebui ghicit de jucator. 
+Reguli:
+ * jucatorul are voie sa introduca doar litere mici ale alfabetului, care vor fi asezate intr-un cuvant in ordinea in care sunt introduse. 
+ * jucatorul are voie sa stearga caractere si sa introduca altele noi
+ * jucatorul nu are voie sa introduca un cuvant care nu are 5 litere, in caz contrar, daca introduce un cuvant care are mai putine litere, nu va fi acceptat si va aparea un mesaj de atentionare pe ecran, iar daca introduce mai mult de 5 caractere, cele care sunt in plus nu vor fi luate in calcul
+ * se considera ca jucatorul epuizeaza o incercare cand a introdus un cuvant de 5 litere urmat de apasarea taste **enter**. Daca cuvantul ghicit de jucator are litere care se gasesc in aceeasi pozitie in cuvantul care trebuie ghicit, se vor colora casutele in care se afla literele respective cu verde, iar daca exista litere care se afla in cuvantul de ghicit, dar nu pe aceleasi pozitii, se vor colora casutele respective cu galben 
+ * daca jucatorul apasa tasta **:** , se va afisa meniul, iar jucatorul va avea posibilitatea sa inceapa un joc nou, sau sa renunte
+ * daca jucatorul ghiceste cuvantul se va afisa un mesaj corespunzator, urmat de afisarea meniului cu cele 2 optiuni
+ * daca jucatorul epuizeaza toate cele 6 incercari, se va afisa alt mesaj urmat de meniu.
+
+Programul se va relua atata timp cat jucatorul nu acceseaza optiunea **Quit** din meniu.

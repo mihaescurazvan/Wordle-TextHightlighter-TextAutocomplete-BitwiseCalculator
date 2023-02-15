@@ -1,44 +1,52 @@
 # 312CC_Mihaescu_Razvan_Tema2 PCLP 2022
 
-## Problema 1 - Text Highlight | Timp de lucru: 40 de minute
+## Problem 1 - Text Highlight
 
-Pentru aceasta problema am utilizat 2 vectori de vectori, **linie** si **sublinieri**, pe care i-am alocat dinamic, astfel incat sa nu existe memorie neutilizata. 
-Am citit intr-un vector **aux** fiecare linie, iar continutul l-am copiat in vectorul linie de pe pozitia corespunzatoare, alocand exact atatea elemente cate au fost citite, iar vectorul sublinieri corespunzator pozitiei l-am umplut cu spatii.
-Apoi, pentru fiecare linie am apelat functia **subliniereCuivinteCheie** care implementeaza mecanismul de subliniere in felul urmator: am despartit cuvintele de pe fiecare linie si prin functia **cuvinteCheie** am verificat daca se afla in lista cuvintelor care trebuie subliniate. Daca da, il subliniez in vectorul **subliniere**.
-Daca cuvantul extras este **of**, **each** sau **a** si, prin concatenare, cu anteriorul cuvant extras formeaza unul dintre cuvintele compuse speciale din lista, il subliniez de la inceputul pozitiei cuvantului anterior extras (pozitie pe care o retin in variabila **antpoz**) si pana la pozitia de final a cuvantului actual, astfel incat sa fie sublimiate si toate spatiile dintre cele 2 cuvinte. 
+For this problem, I used two vectors of vectors, **linie** and **sublinieri**, which I dynamically allocated, so that there is no unused memory.
+I read each line into an auxiliary vector **aux**, and then copied its content into the corresponding position of the line vector, allocating exactly as many elements as were read. The corresponding **sublinieri** vector was filled with spaces.
+Then, for each line, I called the **subliniereCuivinteCheie** function, which implements the highlighting mechanism as follows: I split the words on each line, and using the **cuvinteCheie** function, I checked whether they are on the list of words to be highlighted. If so, I highlighted it in the **subliniere** vector.
+If the extracted word is **of**, **each** or **a** and, by concatenation, with the previous extracted word forms one of the special compound words on the list, I highlight it from the beginning of the position of the previously extracted word (which I store in the **antpoz** variable) to the end position of the current word, so that all the spaces between the two words are also highlighted.
 
-## Problema 2 - Text Autocomplete | Timp de lucru: 2h
 
-Pentru aceasta problema am folosit un vector de structuri de tipul **dictionary_entry**, pe care l-am alocat dinamic astfel incat sa nu existe memorie neutilizata. 
-Apoi, am citit intr-un vector **cuvinte**, cuvintele care trebuie autocompletate si le-am parcurs pe rand. Daca intalnesc semne de punctuatie le afisez asa cum sunt scrise, cuvinte de sine statatoare.
-In caz contrar, am abordat celelalte 3 cazuri prin functii distincte, astfel: 
-  * daca cuvantul se termina cu *, am folosti functia **cuvantSpecial** care afiseaza cuvantul asa cum este scris si ii creste prioritatea daca se afla in dictionar sau il introduc in dictionar cu prioritatea 1, cuajutorul functiei **adaugareDictionar**
-  * daca cuvantul este scris normal, verific prin functia **potrivireDictionar** daca se gaseste o potrivire cu un cuvant din dictionar. Daca da, se alege cuvantul cu prioritatea cea mai mare cu care se potriveste (daca sunt mai multe, il aleg pe cel mai mic in oridine lexicografica) si se returneaza prin parametrul **potrivit**, iar apoi afisez cuvantul **potrivit**
-  * daca cuvantul este scris normal, dar nu se gaseste nicio potrivire in dictionar, se va scrie cuvantul cum a fost introdus de la tastatura si apoi il adaug la finalul dictionarului cu proritatea 1, cu ajutorul functiei **adaugareDictionar** (care realoca dictionarului un element in plus).
-  
-## Problema 3 - Calculator pe biti | Timp de lucru: 4h
-  
-Pentru aceasta problema am folosit un vector de pointeri la functiile **adunare**, **interschimbare**, **rotatie**, **xxor** care implementeaza operatiile cerute. Am respectat oridinea functiilor in vector pentru a se potrivi cu codificarea operatiilor in binar. 
-Am extras apoi numerele si operatiile prin deplasari la dreapta pe biti si masti de 4 biti pentru numere si 2 biti pentru operatii.
-Pentru fiecare operatie am apelat functia **aplicareOperatie** care, dupa cum sugereaza si numele, aplica operatia corespunzatoare celor 2 numere si returneaza rezultatul prin parametrul **nr1**.
-Am implementat cele 4 operatii prin functii distincte in urmatorul mod:
-  * pentru **adunare** am parcurs cei patru biti pe are sunt scrise cele 2 numere de la LSB la MSB si am aplicat xor pe ficare bit si restul anterior (care a fost initial 0), iar apoi am calculat restul pentru pasul respectiv
-  * pentru **interschimbare** am extras pozitile p1 si p2 din al doilea numar, am extras bitii de la pozitiile respective in primul numar si cu ajutorul a doua masti i-am interschimbat, iar in final, am extras doar ultimii 4 biti din numarul nou obtinut
-  * pentru **rotatie** am folisit faptul ca numerele sunt scris pe 4 biti, iar rotatia de x ori este echivalenta cu rotatia de x%4 ori. Apoi am rotit cu cate un bit la stanga retinand MSB-ul care s-ar fi pierdut si l-am atribuit LSB-ului, iar apoi am repetat procesul de nr2%4 ori si in final am salvat doar ultimii 4 biti
-  * pentru **xor** am folosit echivalenta portii logice XOR cu A*!B + !A*B .
-  
-## **Wordle** | Timp de lucru: 18-20h
+## Problem 2 - Text Autocomplete 
 
-Pentru implementarea jocului **wordle** am folosit biblioteca din C **ncurses**, ca sa creez interfata grafica. 
-Initial am creat un meniu simplist, care are doua optiuni **Play New Game** si **Quit**. Daca jucatorul alege prima optiune se va crea o tabla de joc care contine cate 5 ferestre asezate pe 6 randuri ce reprezinta cele 6 incercari ale jucatorului pentru a ghici cuvantul. Daca jucatorul alege a doua optiune, programul se va opri.
-Cand se incepe un joc nou, din lista cuvintelor date in problema, se extrage la intamplare unul care va trebui ghicit de jucator. 
-Reguli:
- * jucatorul are voie sa introduca doar litere mici ale alfabetului, care vor fi asezate intr-un cuvant in ordinea in care sunt introduse. 
- * jucatorul are voie sa stearga caractere si sa introduca altele noi
- * jucatorul nu are voie sa introduca un cuvant care nu are 5 litere, in caz contrar, daca introduce un cuvant care are mai putine litere, nu va fi acceptat si va aparea un mesaj de atentionare pe ecran, iar daca introduce mai mult de 5 caractere, cele care sunt in plus nu vor fi luate in calcul
- * se considera ca jucatorul epuizeaza o incercare cand a introdus un cuvant de 5 litere urmat de apasarea taste **enter**. Daca cuvantul ghicit de jucator are litere care se gasesc in aceeasi pozitie in cuvantul care trebuie ghicit, se vor colora casutele in care se afla literele respective cu verde, iar daca exista litere care se afla in cuvantul de ghicit, dar nu pe aceleasi pozitii, se vor colora casutele respective cu galben 
- * daca jucatorul apasa tasta **:** , se va afisa meniul, iar jucatorul va avea posibilitatea sa inceapa un joc nou, sau sa renunte
- * daca jucatorul ghiceste cuvantul se va afisa un mesaj corespunzator, urmat de afisarea meniului cu cele 2 optiuni
- * daca jucatorul epuizeaza toate cele 6 incercari, se va afisa alt mesaj urmat de meniu.
+For this problem, I used a vector of structures of type **dictionary_entry**, which I dynamically allocated, so that there is no unused memory.
+Then, I read the words that need to be autocompleted into a vector **cuvinte**, and processed them one by one. If I encounter punctuation marks, I output them as they are, as standalone words.
+Otherwise, I tackled the other three cases using distinct functions, as follows:
 
-Programul se va relua atata timp cat jucatorul nu acceseaza optiunea **Quit** din meniu.
+ * if the word ends with an asterisk (*), I used the **cuvantSpecial** function, which displays the word as it is written and increases its priority if it is in the dictionary or adds it to the dictionary with priority 1 using the **adaugareDictionar** function.
+ * if the word is written normally, I check with the **potrivireDictionar** function if there is a match with a word in the dictionary. If so, the word with the highest priority that matches (if there are more than one, I choose the smallest one in lexicographic order) is selected and returned through the **potrivit** parameter, and then I output the word **potrivit**.
+ * if the word is written normally, but there is no match in the dictionary, the word as typed is written and then added to the end of the dictionary with priority 1 using the   * daca cuvantul este scris normal, dar nu se gaseste nicio potrivire in dictionar, se va scrie cuvantul cum a fost introdus de la tastatura si apoi il adaug la finalul dictionarului cu proritatea 1, cu ajutorul functiei v (care realoca dictionarului un element in plus).
+ function (which reallocates an additional element to the dictionary).
+
+
+## Problem 3 - Bitwise Calculator 
+
+For this problem, I used a pointer vector to the functions **adunare**, **interschimbare**, **rotatie**, **xxor** that implement the requested operations. I followed the order of functions in the vector to match the binary representation of operations.
+I then extracted the numbers and operations by shifting the bits to the right and applying 4-bit masks for numbers and 2-bit masks for operations.
+For each operation, I called the **aplicareOperatie** function which, as the name suggests, applies the corresponding operation to the 2 numbers and returns the result through the **nr1** parameter.
+I implemented the 4 operations through separate functions in the following way:
+
+ * for **adunare**, I went through the four bits on which the 2 numbers are written from LSB to MSB and applied XOR on each bit and the previous remainder (which was initially 0), and then calculated the remainder for the current step
+ * for **interschimbare**, I extracted the positions p1 and p2 from the second number, extracted the bits from the respective positions in the first number, and using two masks I swapped them, and finally, I extracted only the last 4 bits from the new number
+ * for **rotatie**, I used the fact that the numbers are written on 4 bits, and rotation x times is equivalent to rotation x%4 times. Then I rotated by one bit to the left, retaining the MSB that would have been lost, and assigned it to the LSB, and then repeated the process for nr2%4 times and finally saved only the last 4 bits
+ * for **xor**, I used the logical XOR gate equivalency with A*!B + !A*B .
+
+
+## Wordle 
+
+To implement the **Wordle** game, I used the **ncurses C library** to create the graphical interface. Initially, I created a simple menu with two options: **Play New Game** and **Quit**. If the player chooses the first option, a game board with five windows arranged on six rows representing the player's six attempts to guess the word will be created. If the player chooses the second option, the program will stop.
+
+When starting a new game, a word to be guessed by the player is randomly selected from the list of words given in the problem.
+
+Rules:
+
+ * The player is only allowed to enter lowercase letters of the alphabet, which will be placed in a word in the order they are entered.
+ * The player is allowed to delete characters and enter new ones.
+ * The player is not allowed to enter a word that does not have five letters. Otherwise, if the player enters a word with fewer letters, it will not be accepted, and a warning message will appear on the screen. If the player enters more than 5 characters, the extras will not be processed.
+ * It is considered that the player has exhausted an attempt when they enter a 5-letter word followed by pressing the **Enter** key. If the word guessed by the player has letters that are in the same position in the word to be guessed, the boxes where those letters are located will be colored green. If there are letters that are in the word to be guessed but not in the same positions, the respective boxes will be colored yellow.
+ * If the player presses the **:** key, the menu will be displayed, and the player will have the option to start a new game or quit.
+ * If the player guesses the word, a corresponding message will be displayed, followed by the menu with the two options.
+ * If the player exhausts all six attempts, another message will be displayed, followed by the menu.
+ 
+The program will continue as long as the player does not access the **Quit** option from the menu.  
